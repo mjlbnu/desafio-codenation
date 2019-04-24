@@ -1,6 +1,18 @@
-var fs = require('fs');
+const fs = require('fs');
+const contentFilePath = './'
 
-fs.appendFile('mynewfile1.txt', 'Hello content!', function (err) {
-  if (err) throw err;
-  console.log('Saved!');
-});
+function save(content, filename) {
+  const contentString = JSON.stringify(content)
+  return fs.writeFileSync(contentFilePath + filename, contentString)
+}
+
+function load(filename) {
+  const fileBuffer = fs.readFileSync(contentFilePath + filename, 'utf-8')
+  const contentJson = JSON.parse(fileBuffer)
+  return contentJson
+}
+
+module.exports = {
+  save,
+  load
+}
